@@ -69,7 +69,7 @@ internal sealed partial class UpdateForm : CustomForm
             StartProgram();
         else
         {
-            progressLabel.Text = $"An update is available: v{latestVersion}";
+            progressLabel.Text = $"An update is available: v{latestVersion} (Original Repository)";
             ignoreButton.Enabled = true;
             updateButton.Enabled = true;
             updateButton.Click += OnUpdate;

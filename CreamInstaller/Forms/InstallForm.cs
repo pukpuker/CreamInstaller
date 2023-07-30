@@ -4,9 +4,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using CreamInstaller.Components;
 using CreamInstaller.Resources;
 using CreamInstaller.Utility;
+using WinRT;
 using static CreamInstaller.Platforms.Paradox.ParadoxLauncher;
 using static CreamInstaller.Resources.Resources;
 
@@ -195,6 +197,28 @@ internal sealed partial class InstallForm : CustomForm
                     throw new CustomMessageException("The operation was canceled.");
                 UpdateUser($"Operation succeeded for {selection.Name}.", LogTextBox.Success);
                 _ = activeSelections.Remove(selection);
+                var ragulem = selection.DLC;
+                string directory_path = "C:\\Program Files (x86)\\Steam\\AppList\\";
+                foreach (var ragulem2 in ragulem)
+                {
+                    bool fileExists = false;
+                    foreach (string testovik in Directory.GetFiles("C:\\Program Files (x86)\\Steam\\AppList\\"))
+                    {
+                        string file_text = File.ReadAllText(testovik);
+                        if (file_text == ragulem2.Id)
+                        {
+                            fileExists = true;
+                            break;
+                        }
+                    }
+                    if (!fileExists)
+                    {
+                        string searchPattern = "*.txt";
+                        string[] files = Directory.GetFiles(directory_path, searchPattern);
+                        int fileCount = files.Length;
+                        File.WriteAllText($"C:\\Program Files (x86)\\Steam\\AppList\\{fileCount}.txt", ragulem2.Id);
+                    }
+                }
             }
             catch (Exception exception)
             {
